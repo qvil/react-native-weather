@@ -7,6 +7,18 @@ export default class App extends React.Component {
     isLoadded: true
   };
 
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(position);
+        this.setState({ isLoadded: true });
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
   render() {
     const { isLoadded } = this.state;
 

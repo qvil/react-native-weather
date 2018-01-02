@@ -16,6 +16,7 @@ class Weather extends Component {
   render() {
     return (
       <LinearGradient
+        // colors={gradientColors.sunset}
         colors={gradientColors.rainy}
         style={styles.container}
       >
