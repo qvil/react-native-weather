@@ -1,31 +1,53 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import Weather from "./Weather";
+import axios from 'axios';
+
+import { API_KEY } from './config';
 
 export default class App extends React.Component {
   state = {
-    isLoadded: true
+    isLoadded: false,
+    error: null,
+    temperature: null,
+    name: null,
   };
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position);
-        this.setState({ isLoadded: true });
+        this._getWeather(position.coords.latitude, position.coords.longitude);
       },
       error => {
-        console.log(error);
+        console.error(error);
+        this.setState({ error: error });
       }
     )
   }
 
+  _getWeather = (lat, lon) => {
+    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          isLoadded: true,
+          temperature: json.main.temp,
+          name: json.weather[0].main,
+        });
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+
   render() {
-    const { isLoadded } = this.state;
+    const { isLoadded, error } = this.state;
 
     return (
       <View style={styles.container}>
         <StatusBar
-          barStyle="dark-content"
+          barStyle="light-content"
         />
         {isLoadded ? <Weather /> : (
           <View style={styles.loadingContainer}>
@@ -33,6 +55,7 @@ export default class App extends React.Component {
               Getting Weather{"\n"}
               Qvil
             </Text>
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         )}
       </View>
@@ -43,16 +66,21 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   loadingContainer: {
     flex: 1,
+    paddingLeft: 32,
     backgroundColor: "#ffec99",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   loadingText: {
-    paddingLeft: 32,
     // marginBottom: 32,
-    fontSize: 32
-  }
+    fontSize: 32,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 32,
+    backgroundColor: 'transparent',
+  },
 });
