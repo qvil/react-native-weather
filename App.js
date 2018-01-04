@@ -10,6 +10,7 @@ export default class App extends React.Component {
     isLoadded: false,
     error: null,
     temperature: null,
+    humidity: null,
     name: null,
   };
 
@@ -32,6 +33,7 @@ export default class App extends React.Component {
         this.setState({
           isLoadded: true,
           temperature: json.main.temp,
+          humidity: json.main.humidity,
           name: json.weather[0].main,
         });
         return json;
@@ -42,7 +44,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { isLoadded, error, temperature, name } = this.state;
+    const { isLoadded, error, temperature, humidity, name } = this.state;
 
     return (
       <View style={styles.container}>
@@ -51,8 +53,9 @@ export default class App extends React.Component {
         />
         {isLoadded ?
           <Weather
-            name="Rain"
+            name={name}
             temperature={Math.round(temperature - 273.15)}
+            humidity={humidity}
           /> :
           <View style={styles.loadingContainer}>
             <Text style={styles.loadingText}>
@@ -79,7 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   loadingText: {
-    // marginBottom: 32,
     fontSize: 32,
   },
   errorText: {

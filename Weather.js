@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text } from "react-native";
 import { LinearGradient } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropTypes } from 'prop-types';
 import WeatherCases from './WeatherCases';
 
-const Weather = ({ name, temperature }) => {
+const Weather = ({ name, temperature, humidity }) => {
   return (
     <LinearGradient
         colors={WeatherCases[name].colors}
         style={styles.container}
       >
         <View style={styles.upper}>
-          <Ionicons color="white" size={144} name={WeatherCases[name].icon}/>
-          <Text style={[styles.temperature, styles.text]}>{`${temperature}°C`}</Text>
+          <MaterialCommunityIcons color="white" size={144} name={WeatherCases[name].icon}/>
+          <Text style={[styles.title, styles.text]}>{`${temperature}°C`}</Text>
+          <Text style={[styles.subTitle, styles.text]}>{`Humidity : ${humidity}%`}</Text>
         </View>
         <View style={styles.lower}>
           <Text style={styles.title}>{WeatherCases[name].title}</Text>
@@ -39,13 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
   },
-  icon: {
-  },
   text: {
     color: 'white',
-  },
-  temperature: {
-    fontSize: 40,
   },
   title: {
     fontSize: 40,
@@ -58,6 +54,7 @@ const styles = StyleSheet.create({
 
 Weather.propTypes = {
   temperature: PropTypes.number.isRequired,
+  humidity: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 }
 
