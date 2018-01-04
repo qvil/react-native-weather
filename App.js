@@ -42,14 +42,18 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { isLoadded, error } = this.state;
+    const { isLoadded, error, temperature, name } = this.state;
 
     return (
       <View style={styles.container}>
         <StatusBar
           barStyle="light-content"
         />
-        {isLoadded ? <Weather /> : (
+        {isLoadded ?
+          <Weather
+            name="Rain"
+            temperature={Math.round(temperature - 273.15)}
+          /> :
           <View style={styles.loadingContainer}>
             <Text style={styles.loadingText}>
               Getting Weather{"\n"}
@@ -57,7 +61,7 @@ export default class App extends React.Component {
             </Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
-        )}
+        }
       </View>
     );
   }

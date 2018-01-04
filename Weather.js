@@ -1,37 +1,27 @@
-import React, { Component } from "react";
+import React from 'react';
 import { StyleSheet, View, Text } from "react-native";
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { PropTypes } from 'prop-types';
+import WeatherCases from './WeatherCases';
 
-const gradientColors = {
-  rainy: ["#00C6FB", "#005BEA"],
-  sunset: ["#5f3dc4", "#845ef7", "#fd7e14"],
-}
-
-class Weather extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <LinearGradient
-        // colors={gradientColors.sunset}
-        colors={gradientColors.rainy}
+const Weather = ({ name, temperature }) => {
+  return (
+    <LinearGradient
+        colors={WeatherCases[name].colors}
         style={styles.container}
       >
         <View style={styles.upper}>
-          <Ionicons color="white" size={144} name="ios-rainy"/>
-          <Text style={[styles.temperature, styles.text]}>30°C</Text>
+          <Ionicons color="white" size={144} name={WeatherCases[name].icon}/>
+          <Text style={[styles.temperature, styles.text]}>{`${temperature}°C`}</Text>
         </View>
         <View style={styles.lower}>
-          <Text style={styles.title}>Raining</Text>
-          <Text style={[styles.subTitle, styles.text]}>For more info look outside</Text>
+          <Text style={styles.title}>{WeatherCases[name].title}</Text>
+          <Text style={[styles.subTitle, styles.text]}>{WeatherCases[name].subTitle}</Text>
         </View>
       </LinearGradient>
-    );
-  }
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -65,5 +55,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
+
+Weather.propTypes = {
+  temperature: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+}
 
 export default Weather;
