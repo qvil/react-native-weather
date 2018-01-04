@@ -1,0 +1,37 @@
+{
+    "appTitle": "Current Location Weather",
+    "loading": "Loading",
+    "madeBy": "Made by Taesu Hyeon",
+    "humidity": "Humidity",
+    "moreInfo": "For more info look at the outside.",
+    "weather": {
+        "Thunderstorm": {
+            "title": "Thunderstorm",
+            "icon": "weather-lightning"
+        },
+        "Drizzle": {
+            "title": "Drizzle",
+            "icon": "weather-rainy"
+        },
+        "Rain": {
+            "title": "Rain",
+            "icon": "weather-pouring"
+        },
+        "Snow": {
+            "title": "Snow",
+            "icon": "weather-snowy"
+        },
+        "Atmosphere": {
+            "title": "Atmosphere",
+            "icon": "weather-fog"
+        },
+        "Clear": {
+            "title": "Clear",
+            "icon": "weather-sunny"
+        },
+        "Clouds": {
+            "title": "Clouds",
+            "icon": "weather-cloudy"
+        }
+    }
+}

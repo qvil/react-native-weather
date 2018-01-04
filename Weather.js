@@ -4,23 +4,24 @@ import { LinearGradient } from 'expo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PropTypes } from 'prop-types';
 import WeatherCases from './WeatherCases';
+import string from './language/en.json';
 
 const Weather = ({ name, temperature, humidity }) => {
   return (
     <LinearGradient
-        colors={WeatherCases[name].colors}
-        style={styles.container}
-      >
-        <View style={styles.upper}>
-          <MaterialCommunityIcons color="white" size={144} name={WeatherCases[name].icon}/>
-          <Text style={[styles.title, styles.text]}>{`${temperature}°C`}</Text>
-          <Text style={[styles.subTitle, styles.text]}>{`Humidity : ${humidity}%`}</Text>
-        </View>
-        <View style={styles.lower}>
-          <Text style={styles.title}>{WeatherCases[name].title}</Text>
-          <Text style={[styles.subTitle, styles.text]}>{WeatherCases[name].subTitle}</Text>
-        </View>
-      </LinearGradient>
+      colors={WeatherCases[name].colors}
+      style={styles.container}
+    >
+      <View style={styles.upper}>
+        <MaterialCommunityIcons color="white" size={144} name={WeatherCases[name].icon} />
+        <Text style={[styles.title, styles.text]}>{`${temperature}°C`}</Text>
+        <Text style={[styles.subTitle, styles.text]}>{`${string.humidity} : ${humidity}%`}</Text>
+      </View>
+      <View style={styles.lower}>
+        <Text style={styles.title}>{string.weather[name].title}</Text>
+        <Text style={[styles.subTitle, styles.text]}>{string.moreInfo}</Text>
+      </View>
+    </LinearGradient>
   );
 };
 

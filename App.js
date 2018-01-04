@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar, ActivityIndicator } from "react-native";
 import Weather from "./Weather";
 import axios from 'axios';
-
 import { API_KEY } from './config';
+import string from './language/en.json';
+import { LinearGradient } from 'expo';
 
 export default class App extends React.Component {
   state = {
@@ -47,9 +48,12 @@ export default class App extends React.Component {
     const { isLoadded, error, temperature, humidity, name } = this.state;
 
     return (
-      <View style={styles.container}>
+      <LinearGradient
+        style={styles.container}
+        colors={["#e7f5ff", "#d0ebff", "#a5d8ff", "#74c0fc", "#4dabf7"]}
+      >
         <StatusBar
-          barStyle="light-content"
+          barStyle="dark-content"
         />
         {isLoadded ?
           <Weather
@@ -58,14 +62,22 @@ export default class App extends React.Component {
             humidity={humidity}
           /> :
           <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>
-              Getting Weather{"\n"}
-              Qvil
+            <Text style={[styles.text, styles.appTitle]}>
+              {string.appTitle}
+            </Text>
+            <View>
+              <ActivityIndicator size="large" />
+              <Text style={[styles.text, styles.loadingText]}>
+                {string.loading}
+              </Text>
+            </View>
+            <Text style={[styles.text, styles.madeBy]}>
+              {string.madeBy}
             </Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         }
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -73,16 +85,27 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   loadingContainer: {
     flex: 1,
     paddingLeft: 32,
-    backgroundColor: "#ffec99",
-    justifyContent: "center",
+    paddingRight: 32,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  text: {
+    backgroundColor: 'transparent',
+  },
+  appTitle: {
+    fontSize: 32,
   },
   loadingText: {
-    fontSize: 32,
+    fontSize: 24,
+  },
+  madeBy: {
+    fontSize: 16,
+    color: '#1864ab',
   },
   errorText: {
     color: 'red',
