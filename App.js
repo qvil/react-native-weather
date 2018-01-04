@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, StatusBar, ActivityIndicator } from "react-native";
 import Weather from "./Weather";
 import axios from 'axios';
-import { API_KEY } from './config';
+// import { API_KEY } from './config'; // Add your api key
 import string from './language/en.json';
 import { LinearGradient } from 'expo';
 
@@ -28,7 +28,8 @@ export default class App extends React.Component {
   }
 
   _getWeather = (lat, lon) => {
-    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`)
+    // fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`) // Prod
+    fetch(`http://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22`) // Dev/Example
       .then(response => response.json())
       .then(json => {
         this.setState({
